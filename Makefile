@@ -74,8 +74,6 @@ assert_on_master:
 publish: assert_on_master all
 	git checkout $(PUBLISH_BRANCH) && \
 	cp -r $(BUILD_DIR)/* . && \
-	git add . && \
-	git commit -m "Published."
-	git checkout -
+	git add .
 
 .PHONY: all clean clean_output listings publish switch_to_master newpost
