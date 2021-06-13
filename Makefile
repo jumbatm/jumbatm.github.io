@@ -65,13 +65,13 @@ clean: clean_output
 clean_output:
 	rm -f $(LISTINGS_FILES) $(OUTPUT)
 
-switch_to_master:
-	git checkout $(MASTER)
+assert_on_master:
+	[[ "$(shell git rev-parse --abbrev-ref HEAD)" = "$(MASTER)" ]] && exit 0 || exit 1
 
-publish: switch_to_master all
-	git checkout $(PUBLISH_BRANCH)
-	cp -r $(BUILD_DIR)/* .
-	git add .
+publish: assert_on_master all
+	git checkout $(PUBLISH_BRANCH) && \
+	cp -r $(BUILD_DIR)/* . && \
+	git add . && \
 	git commit -m "Published."
 	git checkout -
 
