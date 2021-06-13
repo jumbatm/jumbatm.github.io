@@ -1,2 +1,2 @@
-[Home](./index.html)
-[Posts](./posts.html)
+[Home](/index.html)
+[Posts](/posts.html)
