@@ -23,6 +23,9 @@ OUTPUT = $(addprefix $(BUILD_DIR)/, $(patsubst %.md,%.$(EXT),$(MDFILES)) $(ADDIT
 
 all: $(OUTPUT) $(LISTINGS_FILES)
 
+newpost:
+	touch $(shell date -I).md
+
 # Generate the final file from the preprocessed markdown.
 $(BUILD_DIR)/%.$(EXT): $(BUILD_DIR)/%.md
 	mkdir -p $(BUILD_DIR)/$(dir $<)
@@ -75,4 +78,4 @@ publish: assert_on_master all
 	git commit -m "Published."
 	git checkout -
 
-.PHONY: all clean clean_output listings publish switch_to_master
+.PHONY: all clean clean_output listings publish switch_to_master newpost
