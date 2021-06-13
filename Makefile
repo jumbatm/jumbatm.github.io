@@ -6,6 +6,7 @@ FOOTER=footer.md
 HEADER=header.md
 PANDOC=pandoc --self-contained -f markdown -c "style.css"
 PUBLISH_BRANCH=build
+MASTER=master
 
 IGNORE=$(HEADER) $(FOOTER)
 
@@ -64,11 +65,14 @@ clean: clean_output
 clean_output:
 	rm -f $(LISTINGS_FILES) $(OUTPUT)
 
-publish: all
+switch_to_master:
+	git checkout $(MASTER)
+
+publish: switch_to_master all
 	git checkout $(PUBLISH_BRANCH)
 	cp -r $(BUILD_DIR)/* .
 	git add .
 	git commit -m "Published."
 	git checkout -
 
-.PHONY: all clean clean_output listings publish
+.PHONY: all clean clean_output listings publish switch_to_master
