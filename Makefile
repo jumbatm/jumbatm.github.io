@@ -5,6 +5,7 @@ EXT=html
 FOOTER=footer.md
 HEADER=header.md
 PANDOC=pandoc --self-contained -f markdown -c "style.css"
+PUBLISH_BRANCH=build
 
 IGNORE=$(HEADER) $(FOOTER)
 
@@ -63,4 +64,11 @@ clean: clean_output
 clean_output:
 	rm -f $(LISTINGS_FILES) $(OUTPUT)
 
-.PHONY: all clean clean_output listings
+publish: all
+	git checkout $(PUBLISH_BRANCH)
+	cp -r $(BUILD_DIR)/* .
+	git add .
+	git commit -m "Published."
+	git checkout -
+
+.PHONY: all clean clean_output listings publish
